@@ -40,16 +40,22 @@ function CheckoutForm() {
 
     const userToken = Cookies.get("token");
 
-    // {
-    //   "data": {
-    //     "title": "Hello",
-    //     "relation": 2,
-    //     "relations": [2, 4],
-    //     "link": {
-    //       "id": 1,
-    //       "type": "abc"
-    //     }
-    //   }
+    // Charging Strapi
+    const chargeResponse = await fetch(
+      "http://localhost:3000/api/chargeStripe",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: {
+            amount: Number(Math.round(globalData.cart.total + "e2") + "e-2"),
+            user: globalData.user.email,
+          },
+        }),
+      }
+    );
 
     const response = await fetch(`${API_URL}/api/orders`, {
       method: "POST",

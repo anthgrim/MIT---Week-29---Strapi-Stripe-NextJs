@@ -17,9 +17,7 @@ function Checkout() {
   //const isAuthenticated  = true;
 
   // load stripe to inject into elements components
-  const stripePromise = loadStripe(
-    "pk_test_51Ll1hBDnku4pw6z1pFXmmi8LHAl4Tf4ctTNZXYa4KiwUCHG95MXlOrLmHYpk5R56b18hzqeH2Se8WPwQvG3vQFyg00T4bayaU5"
-  );
+  const stripePromise = loadStripe("... YOUR PUBLIC KEY...");
 
   return (
     <Row>
