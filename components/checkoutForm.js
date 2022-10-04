@@ -16,7 +16,7 @@ function CheckoutForm() {
   const [error, setError] = useState("");
   const stripe = useStripe();
   const elements = useElements();
-  const appContext = useContext(AppContext);
+  const { globalData } = useContext(AppContext);
 
   function onChange(e) {
     // set the key = to the name property equal to the value typed
@@ -37,17 +37,36 @@ function CheckoutForm() {
     const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
 
     const token = await stripe.createToken(cardElement);
+
     const userToken = Cookies.get("token");
-    const response = await fetch(`${API_URL}/orders`, {
+
+    // {
+    //   "data": {
+    //     "title": "Hello",
+    //     "relation": 2,
+    //     "relations": [2, 4],
+    //     "link": {
+    //       "id": 1,
+    //       "type": "abc"
+    //     }
+    //   }
+
+    const response = await fetch(`${API_URL}/api/orders`, {
       method: "POST",
-      headers: userToken && { Authorization: `Bearer ${userToken}` },
+      mode: "cors",
+      headers: userToken && {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userToken}`,
+      },
       body: JSON.stringify({
-        amount: Number(Math.round(appContext.cart.total + "e2") + "e-2"),
-        dishes: appContext.cart.items,
-        address: data.address,
-        city: data.city,
-        state: data.state,
-        token: token.token.id,
+        data: {
+          amount: Number(Math.round(globalData.cart.total + "e2") + "e-2"),
+          dishes: globalData.cart.items,
+          address: data.address,
+          city: data.city,
+          state: data.state,
+          token: token.token.id,
+        },
       }),
     });
 

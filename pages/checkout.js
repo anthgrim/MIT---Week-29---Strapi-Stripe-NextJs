@@ -10,13 +10,15 @@ import Cart from "../components/cart";
 
 function Checkout() {
   // get app context
-  const {isAuthenticated} = useContext(AppContext);
+  const {
+    globalData: { isAuthenticated },
+  } = useContext(AppContext);
   // isAuthenticated is passed to the cart component to display order button
   //const isAuthenticated  = true;
-  
+
   // load stripe to inject into elements components
   const stripePromise = loadStripe(
-    "pk_test_51HaLhVGgpfLkdZwmHVQcCOdUzwLWqV7umg9EbicemJqLOcLBPDrPtszruyxf4UzqH0lKwaNj5se3tHldNx92nPjI00Zoi8VgBN"
+    "pk_test_51Ll1hBDnku4pw6z1pFXmmi8LHAl4Tf4ctTNZXYa4KiwUCHG95MXlOrLmHYpk5R56b18hzqeH2Se8WPwQvG3vQFyg00T4bayaU5"
   );
 
   return (
